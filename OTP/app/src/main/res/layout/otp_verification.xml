@@ -72,6 +72,17 @@
 
         <TextView
             android:text="PhoneNumber"
+            android:id="@+id/otp_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:includeFontPadding="false"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+        <TextView
+            android:text="PinCode"
             android:id="@+id/otp_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

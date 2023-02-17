@@ -10,6 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.OTP"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"
@@ -26,6 +27,8 @@
         <activity
             android:name=".finish"
             android:label="@string/app_name" />
+
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
