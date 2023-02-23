@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 public class otp extends AppCompatActivity {
     private static final int REQ_USER_CONSENT = 200;
     SmsBroadcastReceiver smsBroadcastReceiver;
+    PinView pinView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,7 @@ public class otp extends AppCompatActivity {
         // Find the TextView by ID
         TextView textView = findViewById(R.id.otp_code);
         TextView textView_Number = findViewById(R.id.otp_number);
-        PinView pinView = findViewById(R.id.pin_view);
+        pinView = findViewById(R.id.pin_view);
         // Get the input text from the previous activity's extra
         Intent intent = getIntent();
 
@@ -43,7 +44,7 @@ public class otp extends AppCompatActivity {
         // Set the input text in the TextView
         textView.setText(PinCode);
         textView_Number.setText(phone_number);
-//        pinView.setText(PinCode);
+
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -104,6 +105,7 @@ public class otp extends AppCompatActivity {
         Matcher matcher = pattern.matcher(message);
         if (matcher.find()) {
             Toast.makeText(getApplicationContext(), matcher.group(0), Toast.LENGTH_LONG).show();
+            pinView.setText(matcher.group(0));
         }
     }
     private void registerBroadcastReceiver() {

@@ -56,9 +56,9 @@
             app:cursorColor="@color/black"
             app:hideLineWhenFilled="true"
             app:itemCount="6"
-            app:itemHeight="50dp"
+            app:itemHeight="40dp"
             app:itemRadius="5dp"
-            app:itemWidth="50dp"
+            app:itemWidth="40dp"
             app:lineWidth="1.5dp" />
         <Button
             android:id="@+id/confirm_button"
