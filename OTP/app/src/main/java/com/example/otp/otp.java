@@ -45,15 +45,15 @@ public class otp extends AppCompatActivity {
         textView_Number.setText(phone_number);
 //        pinView.setText(PinCode);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < PinCode.length(); i++) {
-                    char c = PinCode.charAt(i);
-                    pinView.setText(pinView.getText().append(Character.toString(c)));
-                }
-            }
-        }, 2000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < PinCode.length(); i++) {
+//                    char c = PinCode.charAt(i);
+//                    pinView.setText(pinView.getText().append(Character.toString(c)));
+//                }
+//            }
+//        }, 2000);
 
         Button submitButton = findViewById(R.id.confirm_button);
 
