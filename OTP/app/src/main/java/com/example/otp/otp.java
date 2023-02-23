@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,6 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.chaos.view.PinView;
 import com.example.otp.R;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
@@ -20,6 +26,10 @@ import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,6 +37,7 @@ public class otp extends AppCompatActivity {
     private static final int REQ_USER_CONSENT = 200;
     SmsBroadcastReceiver smsBroadcastReceiver;
     PinView pinView;
+    String code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +50,10 @@ public class otp extends AppCompatActivity {
         // Get the input text from the previous activity's extra
         Intent intent = getIntent();
 
-        String PinCode = intent.getStringExtra("code");
+//        String PinCode = intent.getStringExtra("code");
         String phone_number = intent.getStringExtra("phone_number");
         // Set the input text in the TextView
-        textView.setText(PinCode);
+//        textView.setText(PinCode);
         textView_Number.setText(phone_number);
 
 
@@ -61,11 +72,7 @@ public class otp extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(otp.this, finish.class);
-
-                // Start the next activity
-                startActivity(intent);
+                submitCode(phone_number, code);
             }
         });
         startSmsUserConsent();
@@ -106,6 +113,7 @@ public class otp extends AppCompatActivity {
         if (matcher.find()) {
             Toast.makeText(getApplicationContext(), matcher.group(0), Toast.LENGTH_LONG).show();
             pinView.setText(matcher.group(0));
+            code = matcher.group(0);
         }
     }
     private void registerBroadcastReceiver() {
@@ -135,5 +143,36 @@ public class otp extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(smsBroadcastReceiver);
+    }
+
+    private <string> void submitCode(String phone, String code) {
+
+        String url = "http://4f45-119-13-56-108.ngrok.io/otp";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("phone", phone);
+        params.put("code", code);
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                            String responseString = response.toString();
+                            Log.d("API Response", responseString);
+                            Intent intent = new Intent(otp.this, finish.class);
+                            startActivity(intent);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle errors
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 }

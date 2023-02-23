@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 //        String url = "http://4f45-119-13-56-108.ngrok.io/otp";
 //
 //        Map<String, String> params = new HashMap<>();
-//        params.put("phone_number", phone);
+//        params.put("phone", phone);
 //
 //        JSONObject jsonObject = new JSONObject(params);
 //
