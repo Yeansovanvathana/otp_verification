@@ -44,8 +44,6 @@ public class otp extends AppCompatActivity {
         setContentView(R.layout.otp_verification);
 
         // Find the TextView by ID
-        TextView textView = findViewById(R.id.otp_code);
-        TextView textView_Number = findViewById(R.id.otp_number);
         pinView = findViewById(R.id.pin_view);
         // Get the input text from the previous activity's extra
         Intent intent = getIntent();
@@ -54,8 +52,6 @@ public class otp extends AppCompatActivity {
         String phone_number = intent.getStringExtra("phone_number");
         // Set the input text in the TextView
 //        textView.setText(PinCode);
-        textView_Number.setText(phone_number);
-
 
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
@@ -147,11 +143,11 @@ public class otp extends AppCompatActivity {
 
     private <string> void submitCode(String phone, String code) {
 
-        String url = "http://4f45-119-13-56-108.ngrok.io/otp";
+        String url = "http://337e-119-13-56-102.ngrok.io/api/auth/verify-otp";
 
         Map<String, String> params = new HashMap<>();
         params.put("phone", phone);
-        params.put("code", code);
+        params.put("otpCode", code);
 
         JSONObject jsonObject = new JSONObject(params);
 

@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
 //
 //                // Start the next activity
 //                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, otp.class);
+
+                intent.putExtra("phone_number", inputText);
+                startActivity(intent);
                 loadtext(inputText);
             }
         });
@@ -62,48 +66,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private <string> void loadtext(String phone) {
-        Intent intent = new Intent(MainActivity.this, otp.class);
-        startActivity(intent);
+//        Intent intent = new Intent(MainActivity.this, otp.class);
+//        startActivity(intent);
 
-//        String url = "http://4f45-119-13-56-108.ngrok.io/otp";
-//
-//        Map<String, String> params = new HashMap<>();
-//        params.put("phone", phone);
-//
-//        JSONObject jsonObject = new JSONObject(params);
-//
-//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-////                        String responseString = response.toString();
-////                        Log.d("API Response", responseString);
-//                        try {
-//                            int code = response.getInt("code");
-//                            String phone_number = response.getString("phone_number");
-//                            Log.d("API Response", "Code: " + code);
-//                            Log.d("API Response", "Phone_number: " + phone_number);
-//
-//                            String codeStr = String.valueOf(code);
-//                            Intent intent = new Intent(MainActivity.this, otp.class);
-////
-//                            intent.putExtra("code", codeStr);
-//                            intent.putExtra("phone_number", phone_number);
-//                            startActivity(intent);
-//                        } catch (JSONException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // Handle errors
-//                    }
-//                }
-//        );
-//
-//        Volley.newRequestQueue(this).add(jsonObjectRequest);
+        String url = "http://337e-119-13-56-102.ngrok.io/api/auth/send-otp";
+
+        Map<String, String> params = new HashMap<>();
+        params.put("phone", phone);
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String responseString = response.toString();
+                        Log.d("API Response", responseString);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Handle errors
+                    }
+                }
+        );
+
+        Volley.newRequestQueue(this).add(jsonObjectRequest);
     }
 }
