@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -19,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -31,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mobile_phone);
-
+        AppSignatureHashHelper appSignatureHashHelper = new AppSignatureHashHelper(this);
         // Find the TextInputLayout by ID
         TextInputLayout textInputLayout = findViewById(R.id.filledTextField);
 
@@ -59,20 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
                 intent.putExtra("phone_number", inputText);
                 startActivity(intent);
-                loadtext(inputText);
+                loadtext(inputText, appSignatureHashHelper.getAppSignatures().get(0));
             }
         });
 
     }
 
-    private <string> void loadtext(String phone) {
+    private <string> void loadtext(String phone, String hashkey) {
 //        Intent intent = new Intent(MainActivity.this, otp.class);
 //        startActivity(intent);
 
-        String url = "http://337e-119-13-56-102.ngrok.io/api/auth/send-otp";
+        String url = "https://b78f-119-13-56-108.ngrok.io/api/auth/send-otp";
 
         Map<String, String> params = new HashMap<>();
         params.put("phone", phone);
+        params.put("hashkey", hashkey);
 
         JSONObject jsonObject = new JSONObject(params);
 
