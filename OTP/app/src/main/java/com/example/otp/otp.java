@@ -29,11 +29,10 @@ public class otp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.otp_verification);
 
-        // Get the input text from the previous activity's extra
         Intent intent = getIntent();
+
         Button submitButton = findViewById(R.id.confirm_button);
 
-        // Find the TextView by ID
         EditText pinView = findViewById(R.id.pin_view);
 
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +54,6 @@ public class otp extends AppCompatActivity {
         String url = "https://develop.pregi.api.paylessgate.com/api/v1/sdk/vendor/XXXXXXXXXXXXXX/device/android";
         String device_code = "748j8iz67ijglz556zl2bycc2sl8y2r9";
         String vendor_usre_code = "ZZZZZZZZZZZZZ";
-        String pin_code =  "999999";
         String auth_token = "8vOgoSPUHw";
         String hash = "903c3bad3391cd526a0f7594d77feefa250e553277b05bb08ebe9a533cdde303";
 

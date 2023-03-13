@@ -44,17 +44,8 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Get the text that the user entered
+                // Get the phone number that the user entered
                 String inputText = textInputEditText.getText().toString();
-
-//                // Show a Toast message with the input text
-//                Intent intent = new Intent(MainActivity.this, otp.class);
-//
-//                // Pass the input text as an extra to the next activity
-//                intent.putExtra("input_text", inputText);
-//
-//                // Start the next activity
-//                startActivity(intent);
 
                 loadtext(inputText);
             }
@@ -63,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private <string> void loadtext(String phone) {
-
 
         String url = "https://develop.pregi.api.paylessgate.com/api/v1/sdk/vendor/XXXXXXXXXXXXXX/device/auth";
         String device_code = "748j8iz67ijglz556zl2bycc2sl8y2r9";
