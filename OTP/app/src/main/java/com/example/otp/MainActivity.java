@@ -55,10 +55,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //                // Start the next activity
 //                startActivity(intent);
-                Intent intent = new Intent(MainActivity.this, otp.class);
 
-                intent.putExtra("phone_number", inputText);
-                startActivity(intent);
                 loadtext(inputText);
             }
         });
@@ -66,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private <string> void loadtext(String phone) {
-//        Intent intent = new Intent(MainActivity.this, otp.class);
-//        startActivity(intent);
 
-        String url = "http://337e-119-13-56-102.ngrok.io/api/auth/send-otp";
+
+        String url = "https://develop.pregi.api.paylessgate.com/api/v1/sdk/vendor/XXXXXXXXXXXXXX/device/auth";
+        String device_code = "748j8iz67ijglz556zl2bycc2sl8y2r9";
+        String hash = "853bf04925053439c1710c760a140d2bdcd53073a65727647bb4de08fd98d870";
 
         Map<String, String> params = new HashMap<>();
-        params.put("phone", phone);
+        params.put("phone_number", phone);
+        params.put("device_code", device_code);
+        params.put("hash", hash);
 
         JSONObject jsonObject = new JSONObject(params);
 
@@ -82,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         String responseString = response.toString();
                         Log.d("API Response", responseString);
+                        Intent intent = new Intent(MainActivity.this, otp.class);
+
+                        startActivity(intent);
 
                     }
                 },
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle errors
+                        Toast.makeText(MainActivity.this, "Wrong number", Toast.LENGTH_LONG).show();
                     }
                 }
         );
