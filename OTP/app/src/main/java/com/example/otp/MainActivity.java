@@ -23,6 +23,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 // Get the phone number that the user entered
                 String inputText = textInputEditText.getText().toString();
 
-                loadtext(inputText);
+//                loadtext(inputText);
+                submitPhone(inputText);
             }
         });
 
     }
-
     private <string> void loadtext(String phone) {
 
         String url = "https://develop.pregi.api.paylessgate.com/api/v1/sdk/vendor/XXXXXXXXXXXXXX/device/auth";
@@ -88,5 +90,30 @@ public class MainActivity extends AppCompatActivity {
         );
 
         Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
+    private <string> void submitPhone(String phone) {
+
+        String device_code = "748j8iz67ijglz556zl2bycc2sl8y2r9";
+        String hash = "853bf04925053439c1710c760a140d2bdcd53073a65727647bb4de08fd98d870";
+//        String[] authParam = {"phone_number=09099999999", "device_code=748j8iz67ijglz556zl2bycc2sl8y2r9",};
+        Map<String, String> authParam = new LinkedHashMap<>();
+
+        authParam.put("phone_number", phone);
+        authParam.put("device_code", device_code);
+        boolean result = sdkService.hashCheck(authParam, hash);
+
+        if (result) {
+            // Hash check succeeded
+            Log.d("MainActivity", "Hash check succeeded");
+//            Toast.makeText(MainActivity.this, "Hash check succeeded", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, otp.class);
+
+            startActivity(intent);
+        } else {
+            // Hash check failed
+            Log.d("MainActivity", "Hash check failed");
+            Toast.makeText(MainActivity.this, "Wrong phone number", Toast.LENGTH_LONG).show();
+        }
+
     }
 }

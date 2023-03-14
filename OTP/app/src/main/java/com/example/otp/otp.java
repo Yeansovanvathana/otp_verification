@@ -19,6 +19,8 @@ import com.chaos.view.PinView;
 
 import org.json.JSONObject;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -40,7 +42,7 @@ public class otp extends AppCompatActivity {
             public void onClick(View view) {
                 if (pinView.getText().toString().length() == 6) {
                     code = pinView.getText().toString();
-                    submitCode(code);
+                    submitPin(code);
                 } else {
                     Toast.makeText(otp.this, "Enter 6 digit code", Toast.LENGTH_SHORT).show();
                 };
@@ -87,5 +89,34 @@ public class otp extends AppCompatActivity {
         );
 
         Volley.newRequestQueue(this).add(jsonObjectRequest);
+    }
+    private <string> void submitPin(String code) {
+
+        String device_code = "748j8iz67ijglz556zl2bycc2sl8y2r9";
+        String vendor_usre_code = "ZZZZZZZZZZZZZ";
+        String auth_token = "8vOgoSPUHw";
+        String hash = "903c3bad3391cd526a0f7594d77feefa250e553277b05bb08ebe9a533cdde303";
+        Map<String, String> authParam = new LinkedHashMap<>();
+
+        authParam.put("device_code", device_code);
+        authParam.put("vendor_usre_code", vendor_usre_code);
+        authParam.put("pin_code", code);
+        authParam.put("auth_token", auth_token);
+
+        boolean result = sdkService.hashCheck(authParam, hash);
+
+        if (result) {
+            // Hash check succeeded
+            Log.d("MainActivity", "Hash check succeeded");
+//            Toast.makeText(otp.this, "Hash check succeeded", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(otp.this, finish.class);
+
+            startActivity(intent);
+        } else {
+            // Hash check failed
+            Log.d("MainActivity", "Hash check failed");
+            Toast.makeText(otp.this, "Wrong pin code", Toast.LENGTH_LONG).show();
+        }
+
     }
 }
